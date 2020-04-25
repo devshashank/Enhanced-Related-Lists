@@ -26,7 +26,7 @@ Guidelines for Query : <br/>
 - In case you want to filter records by current object field then The values inside <<>> should be the exact api name of the field. like 
 like for Case.Accountid  in filter put &lt;&lt;Accountid>>
 - currently the Filter works for one recordId and one additional Object field Filter so <<>> can be used two times only with different fields including recordId.
-- The First two fields should be an ID type field and its associated Name type field so as it could redirect to record and it's name is visible to User
+- Atleast two fields should be mentioned in the query & The First two fields should be an ID type field and its associated Name type field so as it could redirect to record and it's name is visible to User. Any Record from query results with no value in first two field will not be shown in the UI.
 
 You have to Use RelatedList component in the record Page(Using Lightning App Builder) where you can set the design attributes to achieve the required functionality if covered. It Includes: <br/>
  - <b>RelatedlistTitle:</b> The Title of Related List that You Want to show.EX. Connections.<br/>
