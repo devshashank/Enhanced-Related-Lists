@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute  name="RelatedlistTitle" label="Title" />
+    <design:attribute  name="ObjectQuery" Label="Query" />  
+    <design:attribute  name="imageUrl" label="Image URL" />
+    <design:attribute  name="showList" Label="Expanded" />
+    <design:attribute  name="showIcon" label="Show Icon" />
+    <design:attribute name="listOffset" Label="Records To Show Initially"/>
+</design:component>

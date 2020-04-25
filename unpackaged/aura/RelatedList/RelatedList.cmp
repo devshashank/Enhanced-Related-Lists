@@ -1,0 +1,64 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasSObjectName,force:hasRecordId" 
+                access="global" controller="RelatedListController" >
+    <aura:attribute type="list" name="RelatedList"  />
+    <aura:attribute type="list" name="fullRelatedList"  />
+    <aura:attribute type="String" name="relatedObjName" default="Account" />
+    <aura:attribute type="String" name="ObjectQuery" default="" />
+    <aura:attribute type="String" name="RelatedlistTitle" default="" />
+    <aura:attribute type="String" name="HeaderIcon" default="action:freeze_user" />
+    <aura:attribute type="Boolean" name="showList"  default="true"/>
+    <aura:attribute type="Boolean" name="loaded"  default="false"/>
+    <aura:attribute type="Boolean" name="showIcon"  default="true"/>  
+    <aura:attribute type="Boolean" name="isIcon" default="true"/> 
+    <aura:attribute type="String" name="imageUrl" default="" />
+    <aura:attribute name="listOffset" type="String" default="6"/>
+    <aura:handler name="relatedListcmp" event="c:RelatedListEvent" action="{!c.handleUpdateEvent}"/>
+    <aura:registerEvent name="relatedListcmp" type="c:RelatedListEvent"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{! v.loaded }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate" onclick="{!c.toggle}">
+                <div class="slds-media__figure">
+                    <aura:if isTrue="{!v.imageUrl==''}">
+                        <lightning:icon iconName="{!v.HeaderIcon}" alternativeText="New note" size="small" />
+                        <aura:set attribute="else">
+                            <img src="{!v.imageUrl}" style="height:34px"></img>
+                        </aura:set>
+                    </aura:if> 
+                    <span class="slds-assistive-text">{!v.RelatedlistTitle}</span>
+                </div>
+                <div class="slds-media__body" style="font-weight: bold;font-size: medium;"> 
+                    {!v.RelatedlistTitle} ({!v.fullRelatedList.length})
+                </div>
+                <div class="slds-no-flex">
+                    <lightning:button label="New" onclick="{!c.createRecord}"/>
+                </div>
+            </header>            
+        </div>
+        <aura:if isTrue="{!v.showList &amp;&amp; v.RelatedList.length>0}">
+            <div class="slds-grid slds-wrap">
+                <aura:iteration items="{!v.RelatedList}" var="item" indexVar="index">
+                    <div class="slds-media slds-col slds-size_4-of-12 slds-p-around_x-small">
+                        <c:RelatedListItem record="{!item}"
+                                           relatedObjName="{!v.relatedObjName}" 
+                                           isIcon="{!v.isIcon}" 
+                                           imageUrl ="{!v.imageUrl}"
+                                           showIcon="{!v.showIcon}" 
+                                           HeaderIcon="{!v.HeaderIcon}" 
+                                           isPrimary ="{!index==0}"></c:RelatedListItem>
+                    </div>
+                </aura:iteration>
+            </div><br/>
+            <footer class="slds-card__footer">
+                <a aura:id="changeIt"
+                   class="slds-card__footer-action" onclick="{!c.showAllList}">View All
+                </a>
+            </footer>
+        </aura:if>
+    </article>
+</aura:component>

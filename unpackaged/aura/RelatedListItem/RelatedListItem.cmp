@@ -1,0 +1,72 @@
+<aura:component  access="global" controller="RelatedListController" >
+    <aura:attribute type="list" name="record" />
+    <aura:attribute type="Boolean" name="isPrimary" default="false" />
+    <aura:attribute type="String" name="HeaderIcon" default="standard:opportunity" />
+    <aura:attribute type="Boolean" name="isIcon" default="false" />
+    <aura:attribute type="Boolean" name="showIcon" default="true" />
+    <aura:attribute type="String" name="relatedObjName" />
+    <aura:attribute name ="showDelModal" type="Boolean" default="false" />
+    <aura:attribute type="String" name="imageUrl" default="" />
+    <aura:registerEvent name="relatedListcmp" type="c:RelatedListEvent"/>
+
+    <div class="slds-media__figure">
+        <aura:if isTrue="{!v.showIcon}">
+            <span class="slds-avatar slds-avatar_large">                
+                <aura:if isTrue="{!v.isIcon &amp;&amp;v.imageUrl==''}">
+                    <lightning:icon iconName="{!v.HeaderIcon}" alternativeText="icon" title="icon" size="small" />
+                    <aura:set attribute="else">
+                        <img src="{!v.imageUrl=='' ?'/services/images/photo/'+v.record.id:v.imageUrl}" style="height:35px;border-radius:50%;"></img>
+                    </aura:set>
+                </aura:if> 
+            </span> 
+        </aura:if>
+    </div>
+    <div class="slds-media__body">
+        <a href="{!'/'+v.record.id}" target="_blank" > {!v.record.name}</a>&nbsp;&nbsp;
+        <aura:if isTrue="{!v.isPrimary}">
+            <lightning:badge label="PRIMARY" class="badgeClass"></lightning:badge>
+        </aura:if>
+        
+        <span style="float:right;">
+            <lightning:buttonMenu alternativeText="Show menu" iconSize="x-small" onselect="{! c.handleSelect }">
+                <lightning:menuItem value="Edit" label="Edit" />
+                <lightning:menuItem value="Delete" label="Delete"/>
+            </lightning:buttonMenu>
+        </span>
+        <br/>
+        <aura:iteration items="{!v.record.rows}" var="item" indexVar="index">
+            <span style="color:#696969;">{!item.label} :  </span>&nbsp;{!item.value}<br/>
+        </aura:iteration>
+    </div>
+    
+    <div><aura:if isTrue="{!v.showDelModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete {!v.relatedObjName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>Are you Sure you want to delete this {!v.relatedObjName}.  </b>
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand"
+                                      label="Delete"
+                                      title="Delete"
+                                      onclick="{!c.onRecorddelete}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+</aura:component>
