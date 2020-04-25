@@ -34,7 +34,6 @@ You have to Use RelatedList component in the record Page(Using Lightning App Bui
  - <b>imageUrl:</b> you can specify any image URL to shocase in the icon place of the Object as well as Record list<br/>
  - <b>showList:</b>What do you want your default view of the List on Load (Expanded/Collapsed)<br/>
  - <b>showIcon:</b>If you want to Hide the icon/Image on the records List you can unmark it<br/>
-  - <b>listOffset:</b>No of Records you want to show initially on Component load<br/>
+ - <b>listOffset:</b>No of Records you want to show initially on Component load<br/>
 
- - 
 
